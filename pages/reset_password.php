@@ -35,7 +35,7 @@ function forgot_password() {
     else {
         $code = $user->generate_password_reset();
         require_once 'testemail/email-inc.php';
-        send_mail($user->get_val("email"),"Password Reset","Click here to reset your password<br><a href='https://waddellryan.com/index.php?page=reset_password&code=$code&email=$email'>https://waddellryan.com/index.php?page=reset_password&code=$code&email=$email</a>");
+        send_mail($user->get_val("email"),"Password Reset","Click here to reset your password<br><a href='https://waddellryan.com/showtech/index.php?page=reset_password&code=$code&email=$email'>https://waddellryan.com/showtech/index.php?page=reset_password&code=$code&email=$email</a>");
         echo "Email Sent";
     }
 }
