@@ -93,6 +93,9 @@ class user {
     public static function get_user_by($param,$value) {
         $db = connect_to_database();
         $param = mysqli_escape_string($db,$param);
+        if (!$param) {
+            die("Something went wrong");
+        }
         $stmt = $db->prepare("SELECT * FROM users WHERE $param=?");
         $stmt->bind_param("s", $value);
         $stmt->execute();
