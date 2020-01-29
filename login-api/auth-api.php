@@ -92,7 +92,8 @@ class user {
 
     public static function get_user_by($param,$value) {
         $db = connect_to_database();
-        $param = mysqli_escape_string($db,$param);
+        $param = $db->escape_string($param);
+//        $param = mysqli_escape_string($db,$param);
         if (!$param) {
             die("Something went wrong");
         }
@@ -104,7 +105,7 @@ class user {
 //            echo "failed!";
             return false;
         }
-        $user_values = mysqli_fetch_assoc($user);
+        $user_values = $user->fetch_assoc();
         $user_class = new user();
         $user_class->set_user_info($user_values);
         return $user_class;
