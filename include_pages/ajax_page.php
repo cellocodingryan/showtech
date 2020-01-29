@@ -54,58 +54,42 @@ if (isset($_POST['method'])) {
             }
 
 
-            if (user::get_this_user()->has_rank("director") || true) {
-                $user->remove_rank("alumni");
-                $user->remove_rank("member");
-                $user->remove_rank("director");
-                if (isset($post['rank_director'])) {
-                    $user->add_rank("director");
+            if (user::get_this_user()->has_rank("chair")) {
+                $user->remove_rank("general_user");
+                $user->remove_rank("trainee");
+                $user->remove_rank("sound_tech");
+                $user->remove_rank("lights_tech");
+                $user->remove_rank("sound_crew_chief");
+                $user->remove_rank("lights_crew_chief");
+                $user->remove_rank("chair");
+                if (isset($post['rank_chair'])) {
+                    $user->add_rank("chair");
                 } else {
-                    if (isset($post['rank_alumni'])) {
-                        $user->add_rank("alumni");
+
+                    if (isset($post['rank_sound_crew_chief'])) {
+                        $user->add_rank("sound_crew_chief");
+                    } else if (isset($post['rank_lights_crew_chief'])) {
+                        $user->add_rank("lights_crew_chief");
+
                     } else {
-                        if (isset($post['rank_member'])) {
-                            $user->add_rank("member");
+
+                        if (isset($post['rank_sound_tech'])) {
+                            $user->add_rank("sound_tech");
+                        } else if (isset($post['rank_lights_tech'])) {
+                            $user->add_rank("lights_tech");
+                        }
+                        else {
+
+                            if (isset($post['rank_trainee'])) {
+                                $user->add_rank("trainee");
+                            } else if (isset($post['rank_general_user'])) {
+                                $user->add_rank("general_user");
+                            }
                         }
                     }
                 }
-
-
             }
 
-            if ($post['keep_account'] == "DELETE") {
-                $user->delete();
-                if (user::get_this_user()->get_val("id") == $user->get_val("id")) {
-                    session_destroy();
-                }
-                echo "<script>window.location.href = 'index.php';</script>";
-                die();
-            } else {
-                if ($id == user::get_this_user()->get_val("id")) {
-                    $user = user::get_user_by("id",$user->get_val("id"));
-                    $user->force_login();
-                    user::set_this_user($user);
-                }
-            }
-
-            if (isset($post['current_password_profile']) && $post['current_password_profile']!="") {
-                if (!isset($post['confirm_password_profile']) || !isset($post['password_profile'])) {
-                    echo "password is required";
-                    break;
-                }else if ($post['password_profile'] != $post['confirm_password_profile']) {
-                    echo "Passwords do not match";
-                    break;
-                } else if ($user->verify_password($post['current_password_profile']) ||
-                    (user::get_this_user()->has_rank("chair") && $user->get_val("id")!=user::get_this_user()->get_val("id"))) {
-                    $user->set_password($post['password_profile']);
-                } else {
-                    echo "Current password not correct";
-                    break;
-                }
-            }
-            if ($user->get_val("id") == user::get_this_user()->get_val("id")) {
-                $_SESSION['msg'] = "Updated!";
-            }
             echo "Updated!";
 
             break;

@@ -43,7 +43,6 @@ class config
         return self::get_config()->configured->{$value};
     }
 
-
     private static $instance;
     public $configured;
 
@@ -381,12 +380,15 @@ class user {
         $stmt->execute();
         $res = $stmt->get_result();
         $ranks = config::get_ranks();
+        $this->find_ranks_to($ranks,null,$this->total_ranks);
+//        $res = mysqli_fetch_assoc($res);
         while ($row = mysqli_fetch_assoc($res)) {
             $this->find_ranks_to($ranks,$row['rank_id'],$this->total_ranks);
         }
 
     }
     private function find_ranks_to($ranks, $rank,&$returnarray) {
+
         if (is_object($ranks)) {
             $return = false;
             foreach($ranks as $x=>$v) {
@@ -394,7 +396,7 @@ class user {
                     $returnarray[$x] = true;
                     $this->actual_ranks[$x] = true;
                     $return = true;
-                } else {
+                } else  {
                     $returnarray[$x] = false;
                     if ($this->find_ranks_to($v,$rank,$returnarray)) {
 

@@ -188,23 +188,26 @@ function print_as_form_add($ranks, &$user, &$rank_hash) {
                                             </div>
                                         </div>
 
-                                        <div class="col-12 col-sm-5 offset-sm-1 mb-3">
-                                            <div class="mb-2"><b>Change Permissions</b></div>
-                                            <?php
-
-                                            foreach ($user->total_ranks as $rank => $_) {
-                                                $checked = "";
-                                                if (isset($user->actual_ranks[$rank]) && $user->actual_ranks[$rank] == true) {
-                                                    $checked = "checked";
+                                        <?php if (user::get_this_user()->has_rank("chair")): ?>
+                                            <div class="col-12 col-sm-5 offset-sm-1 mb-3">
+                                                <div class="mb-2"><b>Change Permissions</b></div>
+                                                <?php
+                                                foreach ($user->total_ranks as $rank => $_) {
+                                                    $checked = "";
+                                                    if (isset($user->actual_ranks[$rank]) && $user->actual_ranks[$rank] == true) {
+                                                        $checked = "checked";
+                                                    }
+                                                    echo "<label> Rank:{$rank} <input type='checkbox' $checked name='rank_$rank'></label><br>";
                                                 }
-                                                echo "<label> Rank:{$rank} <input type='checkbox' $checked name='rank_$rank'></label><br>";
-                                            }
 
-                                            ?>
-                                            <div class="mb-2"><b>Click below to remove account from server</b></div>
-                                            <button type="button" class="btn btn-danger delete_account_button">Delete Account</button>
-                                            <input type="hidden" id="keep_account" name="keep_account" value="">
-                                        </div>
+                                                ?>
+<!--                                                <div class="mb-2"><b>Click below to remove account from server</b></div>-->
+<!--                                                <button type="button" class="btn btn-danger delete_account_button">-->
+<!--                                                    Delete Account-->
+<!--                                                </button>-->
+<!--                                                <input type="hidden" id="keep_account" name="keep_account" value="">-->
+                                            </div>
+                                        <?php endif ?>
                                         <!--                                                --><?php //endif ?>
                                     </div>
                                     <div class="row">

@@ -31,4 +31,6 @@ if (isset($_POST['login'])) {
     user::get_this_user()->logout();
     $_SESSION['msg'] = "Logged out!";
     header("Location: index.php");
+} else {
+    die ("something went wrong");
 }
