@@ -9,9 +9,11 @@ class config
 {
     private function __construct() {
 
-        $config_file_contents = file_get_contents(pathinfo(__FILE__, PATHINFO_DIRNAME)."/config.json");
+        $config_file_contents = file_get_contents(pathinfo(__FILE__, PATHINFO_DIRNAME)."../config.json");
 
         if (!$config_file_contents) {
+            $config_file_contents = file_get_contents(pathinfo(__FILE__, PATHINFO_DIRNAME)."../config_default.json");
+            rename(pathinfo(__FILE__, PATHINFO_DIRNAME)."../config_default.json",pathinfo(__FILE__, PATHINFO_DIRNAME)."../config.json");
             die("config file not found");
 
         }

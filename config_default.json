@@ -1,0 +1,34 @@
+{
+  "db_servername" : "localhost",
+  "db_username" : "root",
+  "db_password" : "pass",
+  "db_tablename" : "showtech",
+  "ranks": {
+    "general_user" : {
+      "trainee" : {
+        "sound_tech": {
+          "sound_crew_chief": {
+            "chair": null
+          }
+        },
+        "lights_tech": {
+          "lights_crew_chief": {
+            "chair": null
+          }
+        }
+      }
+    }
+  },
+  "user_parameters" : {
+    "firstname": "text",
+    "lastname": "text",
+    "email": "text",
+    "phone_number": "int",
+    "rin": "rin"
+  },
+  "required" : ["firstname","lastname","email","phone_number","rin"],
+  "unique_param": "email",
+  "mail_host": "",
+  "mail_username": "",
+  "mail_password": ""
+}
