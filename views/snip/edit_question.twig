@@ -1,0 +1,40 @@
+<div class="w-1/6 hidden md:block max-w-3xl " id="edit_question_sidebar">
+
+    <form onsubmit="" class="w-full flex flex-wrap" id="change_question">
+        {% if q.name|length > 0 %}
+
+            <h1 class="w-full text-center">Edit Form Element</h1>
+        {% else %}
+            <h1 class="w-full text-center">New Form Element</h1>
+        {% endif %}
+        <label class="w-full xl:w-2/6 p-2 my-2 max-w-lg">Name: </label>
+        {% if q.name|length > 0 %}
+            <input class="w-full xl:w-4/6 p-2 my-2" type="hidden" name="_id" value="{{ q._id }}">
+        {% endif %}
+        <input class="w-full xl:w-4/6 p-2 my-2" type="text" value="{{ q.name }}" name="name">
+        <label class="w-full xl:w-2/6 p-2 my-2">Type: </label>
+        <select name="type" class="w-full xl:w-4/6 p-2 my-2 bg-white">
+            <option value="text" {% if q.type == "text" %}selected{% endif %}>
+                Text
+            </option>
+            <option  value="largetext" {% if q.type == "largetext" %}selected{% endif %}>
+                Largetext
+            </option>
+            <option value="multiplechoice" {% if q.type == "multiplechoice" %}selected{% endif %}>
+                Multiple Choice
+            </option>
+        </select>
+        <div id="multiplechoiceoptions" class="{% if q.type != "multiplechoice" %}hidden {% endif %}">
+            <label class="w-full xl:w-2/6 p-2 my-2">Options: </label>
+            <ul class="w-full xl:w-4/6 p-2 my-2 list-disc option_list">
+                {% for o in q.options %}
+                    <li class="option_value_listitem"><input class="w-full xl:w-4/6 p-2 my-2 " value="{{ o }}" type="text" name="option_value_{{ loop.index }}"> <span class="delete_option">Delete</span></li>
+                {% endfor %}
+                <li class="option_value_listitem"><input class="w-full xl:w-4/6 p-2 my-2 " value="{{ o }}" type="text" name="option_value"> <span class="delete_option">Delete</span></li>
+            </ul>
+        </div>
+
+        <button type="button" class="w-full" onclick="change_question()">Save</button>
+        <button type="button" class="w-full" onclick="delete_question('{{ q._id }}')">Delete</button>
+    </form>
+</div>

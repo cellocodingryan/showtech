@@ -1,0 +1,116 @@
+{% extends 'layout.twig'%}
+
+{% block body %}
+
+    <div class="m-auto sm:p-4 flex justify-center">
+
+        {% include 'snip/request_questions.twig' %}
+        {% include 'snip/edit_question.twig' with {'q':questions[0]}%}
+
+
+
+    </div>
+
+{% endblock %}
+{% block script %}
+    <script>
+        $("body").on("click","#request_main_section div",function() {
+            edit_question($(this).attr("name"));
+            $(".shadow-2xl").removeClass("shadow-2xl")
+            $(this).addClass("shadow-2xl")
+        });
+
+        $("body").on("change","#edit_question_sidebar select[name='type']", function() {
+        // $("#edit_question_sidebar select[name='type']").change(function() {
+            console.log (`Type: ${$(this).val()}`);
+            if ($(this).val() == "multiplechoice") {
+                $("#multiplechoiceoptions").removeClass("hidden");
+            } else {
+                $("#multiplechoiceoptions").addClass("hidden");
+
+            }
+        });
+
+
+
+        function refresh_questions() {
+            $.get("/getquestions",function(res) {
+                $("#request_main_section").replaceWith(res)
+                let name = $("#edit_question_sidebar input[name='name']").val();
+                edit_question(name);
+                $(".shadow-2xl").removeClass("shadow-2xl")
+                $(`#request_main_section div[name='${name}']`).addClass("shadow-2xl");
+            })
+        }
+        /**
+         * submit changes to a question
+         *
+         */
+        function change_question() {
+            $.post("/change_question", $("#change_question").serialize(), (data,status)=> {
+                refresh_questions();
+            })
+        }
+        let next_id = 0;
+        function auto_add_new_option_input() {
+            console.log("add new option")
+            let last_val = $(".option_list").children("li:last-child").children("input").val();
+            ++next_id;
+            if (last_val != "") {
+                let newval = $(".option_list").children("li:first-child").clone();
+                $(newval).children("input").val("");
+                $(newval).children("input").attr('name', `option_value_${next_id}`)
+                $(".option_list").append(newval);
+            }
+        }
+
+        /**
+         * modify options, auto add input when last one has text in it
+         */
+        $("body").on("click",".option_list span",function() {
+        // $(".option_list").on("click","span",function() {
+            if ($(".option_value_listitem").length > 1) {
+                $(this).parent().remove();
+                auto_add_new_option_input();
+            }
+        });
+        $("body").on("keypress",".option_list",function(){
+        // $(".option_list").on("change","input",function(){
+            auto_add_new_option_input();
+        });
+
+        /**
+         * select which question to edit now
+         * @param which_item
+         */
+        function edit_question(which_item) {
+            $.get("/modifyquestion/"+which_item,function(res) {
+                $("#edit_question_sidebar").replaceWith(res)
+                if (which_item==null) {
+                    $(".shadow-2xl").removeClass("shadow-2xl")
+                }
+
+            })
+        }
+
+
+        /**
+         * delete a question
+         * @param id
+         */
+        function delete_question(id) {
+            $.ajax({
+                url: "/question/"+id,
+                type: 'DELETE',
+                success: function(response) {
+                    refresh_questions();
+                    $("#edit_question_sidebar").removeClass("md:block");
+                },
+                failure: function(response) {
+                    console.log(response);
+                }
+            });
+
+        }
+    </script>
+{% endblock %}

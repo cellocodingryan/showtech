@@ -3,3 +3,8 @@
     background-image: url("../rpiunion.PNG");
     background-size: cover;
 }
+
+.textarea {
+    min-height: 80px;
+    line-height: 20px;
+}
