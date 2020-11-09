@@ -1,36 +1,40 @@
-<div class="w-full max-w-screen-xl mr-12" id="request_main_section">
-    <h1 class="text-3xl mb-12 p-5">Request show</h1>
     {% for q in questions %}
 
         {% if q.type == "text" %}
 
 
-            <div class="my-3 flex justify-start items-center {% if loop.index0 == 0%}shadow-2xl{% endif%}  md:p-5 p-2" name="{{ q.name }}">
-                <label class="block w-1/4">{{ q.name }} {{ i }}</label>
-                <input class="block p-2 w-full" name="{{ q.name }}" placeholder="{{ q.placeholder }}">
+            <div class="my-3 flex justify-start items-center   md:p-5 p-2" name="{{ q.name }}">
+                <label class="no-select block w-1/4">{{ q.name }} {{ i }}</label>
+                <input class="block p-2 w-full" name="{{ q.name }}" placeholder="{{ q.placeholder }}" value="{{ q.data }}">
             </div>
         {% elseif q.type == "largetext" %}
-            <div class="my-3 flex justify-start items-center {% if loop.index0 == 0%}shadow-2xl{% endif%}  md:p-5 p-2" name="{{ q.name }}">
-                <label class="block w-1/4">{{ q.name }} {{ i }}</label>
-                <span class="textarea block w-full overflow-hidden resize-y bg-white p-2"  role="textbox"  contenteditable onkeydown="get_lines()" name="{{ q.name }}" placeholder="{{ q.placeholder }}"></span>
+            <style>
+                .textarea[contenteditable]:empty::before {
+                    content: "{{ q.placeholder }}";
+                    color: gray;
+                }
+            </style>
+            <div class="my-3 flex justify-start items-center   md:p-5 p-2" name="{{ q.name }}">
+                <label class="no-select block w-1/4">{{ q.name }} {{ i }}</label>
+                <span class="textarea block w-full overflow-hidden bg-white p-2 input" contenteditable  role="textbox"  name="{{ q.name }}">{{ q.data }}</span>
             </div>
         {% elseif q.type == "multiplechoice" %}
 
 
-            <div class="my-3 flex justify-start items-center hover:shadow-2xl {% if loop.index0 == 0%}shadow-2xl{% endif%}  md:p-5 p-2"  name="{{ q.name }}">
+            <div class="my-3 flex justify-start items-center md:p-5 p-2"  name="{{ q.name }}">
                 <label class="block w-1/4">{{ q.name }}</label>
                 <div class="flex justify-start flex-col items-center w-full max-w-full pb-8">
                     {% for o in q.options %}
                         <div class="flex justify-start items-center w-full ">
-                            <input class="block m-3 " name="{{ q.name }}_option_{{ o }}" type="checkbox" >
-                            <label class="text-left w-1/2">{{ o }}</label>
+                            <input class="block m-3 " name="{{ q.name }}_option_{{ o }}" value="{{ o }}" {% if o in q.data%}checked{% endif%} type="checkbox" >
+                            <label class="no-select text-left w-1/2">{{ o }}</label>
                         </div>
                     {% endfor %}
 
 
                     <div class="flex justify-start items-center w-full flex-wrap">
                         <input class="block m-3 " name="{{ q.name }}_option_other_checkbox" type="checkbox" >
-                        <label class="text-left w-1/8">Other</label>
+                        <label class="no-select text-left w-1/8">Other</label>
                         <input class="block m-3 p-2 w-full" name="{{ q.name }}_option_other_text" type="text" >
                     </div>
 
@@ -41,6 +45,5 @@
             </div>
         {% endif %}
     {% endfor %}
-    <button type="button" onclick="edit_question(null)">Add Another Question</button>
 
-</div>
+

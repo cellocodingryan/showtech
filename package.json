@@ -1,0 +1,29 @@
+{
+  "name": "showtech",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "debug": "npx nodemon",
+    "run": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cellocodingryan/showtech.git"
+  },
+  "author": "example_user",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cellocodingryan/showtech/issues"
+  },
+  "homepage": "https://github.com/cellocodingryan/showtech#readme",
+  "description": "",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "mongoose": "^5.10.9",
+    "passport": "^0.4.1",
+    "tailwindcss": "^1.9.6",
+    "twig": "^1.15.2"
+  }
+}

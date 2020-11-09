@@ -6,6 +6,11 @@ const kittySchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    preview: {
+        type: Boolean,
+        required: true,
+        default: true
+    },
     placeholder: {
         type: String,
         required: false
