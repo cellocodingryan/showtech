@@ -31,20 +31,6 @@ router.get("/home",(req,res)=>{
 });
 
 
-router.get("/findcat",(req,res)=>{
-
-    const Kitty = require("../models/kitten");
-
-    Kitty.findOne({name: req.params.name}).then(cat => {
-        if (cat) {
-            res.json({name: cat.name,color: cat.color})
-        } else {
-            res.status(404).json({error: "404 cat not found"})
-        }
-    })
-
-
-})
 
 router.get("/modifyquestion/:name",(req,res)=>{
     let name = req.params.name
