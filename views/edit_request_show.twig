@@ -6,9 +6,12 @@
 
         <div class="w-full max-w-screen-xl mr-12" id="request_main_section">
             <h1 class="text-3xl mb-12 p-5">Edit Form</h1>
-
-            {% include 'snip/request_questions.twig' %}
-            <button type="button" onclick="edit_question(null)">Add Another Question</button>
+            <div>
+                {% include 'snip/request_questions.twig' %}
+            </div>
+            <div class="text-center">
+                <button type="button" class="p-2 bg-green-400 rounded-lg hover:bg-green-500"  onclick="edit_question(null)">Add Another Question</button>
+            </div>
 
         </div>
         {% include 'snip/edit_question.twig' with {'q':questions[0]}%}
@@ -22,7 +25,7 @@
     <script>
 
         $( document ).ready(function() {
-            $("#request_main_section > div:first-of-type").addClass("shadow-2xl");
+            $("#request_main_section > div:first-of-type:not(div:last-of-type)").addClass("shadow-2xl");
         });
 
         $("body").on("click", "#request_main_section > div", function () {
@@ -45,12 +48,12 @@
 
         function refresh_questions() {
             $.get("/getquestions", function (res) {
-                $("#request_main_section > div").remove();
-                $("#request_main_section").append(res)
-                let name = $("#edit_question_sidebar input[name='name']").val();
-                edit_question(name);
-                $(".shadow-2xl").removeClass("shadow-2xl")
-                $(`#request_main_section div[name='${name}']`).addClass("shadow-2xl");
+                $("#request_main_section > div:first-of-type").empty();
+                $("#request_main_section > div:first-of-type").html(res)
+                // let name = $("#edit_question_sidebar input[name='name']").val();
+                // edit_question(name);
+                // $(".shadow-2xl").removeClass("shadow-2xl")
+                // $(`#request_main_section > div > div[name='${name}']:first-of-type`).addClass("shadow-2xl");
             })
         }
 

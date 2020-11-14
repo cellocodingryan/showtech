@@ -34,7 +34,9 @@
             </ul>
         </div>
 
-        <button type="button" class="w-full" onclick="change_question()">Save</button>
-        <button type="button" class="w-full" onclick="delete_question('{{ q._id }}')">Delete</button>
+        <div class="flex justify-center w-full m-5">
+            <button type="button" class="p-2 bg-green-400 block rounded-lg" onclick="change_question()">Save</button>
+            <button type="button" class="p-2 bg-green-400 block ml-4 rounded-lg" onclick="delete_question('{{ q._id }}')">Delete</button>
+        </div>
     </form>
 </div>
