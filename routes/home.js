@@ -216,7 +216,6 @@ router.post("/submit_request",(req,res)=> {
 router.get("/view_shows",function(req,res) {
     Answer.find({}, function (err, docs) {
         res.render("view_shows.twig", {docs:docs})
-        console.log(docs[0].data.wut)
     })
 });
 router.get("/view_show/:id",function(req,res) {
