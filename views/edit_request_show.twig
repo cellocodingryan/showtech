@@ -25,10 +25,10 @@
     <script>
 
         $( document ).ready(function() {
-            $("#request_main_section > div:first-of-type:not(div:last-of-type)").addClass("shadow-2xl");
+            $("#request_main_section > div:first-of-type > div:first-of-type").addClass("shadow-2xl");
         });
 
-        $("body").on("click", "#request_main_section > div", function () {
+        $("body").on("click", "#request_main_section > div > div", function () {
             edit_question($(this).attr("name"));
             $(".shadow-2xl").removeClass("shadow-2xl")
             $(this).addClass("shadow-2xl")
